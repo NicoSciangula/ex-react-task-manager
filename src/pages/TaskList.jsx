@@ -4,7 +4,6 @@ import { useContext } from "react";
 
 export default function TaskList() {
   const { tasks } = useContext(GlobalContext);
-  console.log(tasks);
   return (
     <>
       <main className="d-flex flex-column align-items-center">

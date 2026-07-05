@@ -9,7 +9,7 @@ export default function useTasks() {
       .then((res) => res.json())
       .then((data) => setTasks(data))
       .catch((err) => console.error(err));
-  }, []);
+  }, [tasks]);
 
   const addTask = async (newTask) => {
     const fetchPostTask = await fetch(`${VITE_API_URL}/tasks`, {
@@ -25,8 +25,14 @@ export default function useTasks() {
 
     setTasks((curr) => [...curr, task]);
   };
-  const deleteTask = () => {
-    //Esegui codice
+  const deleteTask = async (taskId) => {
+    const response = await fetch(`${VITE_API_URL}/tasks/${taskId}`, {
+      method: "DELETE",
+    });
+    const { success, message } = await response.json();
+
+    if (!success) throw new Error(message);
+    console.log(success);
   };
   const updateTask = () => {
     //Esegui codice

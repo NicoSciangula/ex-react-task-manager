@@ -35,7 +35,7 @@ export default function AddTask() {
       alert("Task creato");
       setInputData("");
       textAreaRef.current.value = "";
-      selectRef.current.value = "";
+      selectRef.current.value = "To do";
     } catch (error) {
       alert(error.message);
     }
