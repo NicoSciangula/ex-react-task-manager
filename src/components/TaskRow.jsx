@@ -1,4 +1,5 @@
 import { memo } from "react";
+import { Link } from "react-router-dom";
 
 const STATUS_CLASSES = {
   "To do": "table-warning",
@@ -12,9 +13,11 @@ const TaskRow = memo(({ tasks }) => {
   return (
     <tr>
       <th scope="row">{tasks.id}</th>
-      <td>{tasks.title}</td>
+      <td>
+        <Link to={`/task/${tasks.id}`}>{tasks.title}</Link>
+      </td>
       <td className={classNameStatus}>{tasks.status}</td>
-      <td>{tasks.createdAt}</td>
+      <td>{new Date(tasks.createdAt).toLocaleDateString()}</td>
     </tr>
   );
 });
