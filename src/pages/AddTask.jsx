@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 const symbols = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/`~";
 
@@ -7,14 +7,26 @@ export default function AddTask() {
   const textAreaRef = useRef();
   const selectRef = useRef();
 
+  const taskTitleError = useMemo(() => {
+    if (!inputData.trim()) return "Il campo del titolo non può essere vuoto";
+
+    const symbolsError = [...inputData].some((char) => {
+      return symbols.includes(char);
+    });
+
+    if (symbolsError) return "Il campo del titolo non può contenere caratteri speciali";
+  }, [inputData]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!inputData.trim() || symbols.includes(inputData.split(" ", ""))) {
-      return alert("Il campo del titolo non è valido");
-    }
-    console.log(
-      `Titolo: ${inputData}, descrizione: ${textAreaRef.current.value}, select: ${selectRef.current.value}`,
-    );
+    if (taskTitleError) return alert("Il campo del titolo non è valido");
+
+    const newTask = {
+      title: inputData,
+      description: textAreaRef.current.value,
+      status: selectRef.current.value,
+    };
+    console.log("Task da aggiungere:", newTask);
   };
 
   return (
@@ -31,17 +43,22 @@ export default function AddTask() {
                 className="form-control"
                 type="text"
               />
+              {taskTitleError && (
+                <p className="mt-1" style={{ color: "red" }}>
+                  {taskTitleError}
+                </p>
+              )}
 
               <label>Descrizione</label>
               <textarea ref={textAreaRef} className="form-control"></textarea>
 
-              <select className="mt-3 form-select" ref={selectRef}>
-                <option value="todo">To do</option>
-                <option value="doing">Doing</option>
-                <option value="done">Done</option>
+              <select className="mt-3 form-select" ref={selectRef} defaultValue="To do">
+                <option value="To do">To do</option>
+                <option value="Doing">Doing</option>
+                <option value="Done">Done</option>
               </select>
             </div>
-            <button type="submit" className="btn btn-primary mt-3">
+            <button type="submit" className="btn btn-primary mt-3" disabled={taskTitleError}>
               Submit
             </button>
           </form>
