@@ -40,9 +40,14 @@ export default function TaskDetails() {
               <b>Data creazione:</b> {new Date(singleTask.createdAt).toLocaleDateString()}
             </p>
           </div>
-          <button className="btn btn-danger" onClick={handleDelete}>
-            Elimina task
-          </button>
+          <div className="d-flex justify-content-between">
+            <button className="btn btn-danger" onClick={handleDelete}>
+              Elimina task
+            </button>
+            <button onClick={() => navigate("/")} className="btn btn-secondary">
+              Indietro
+            </button>
+          </div>
         </div>
       </div>
     </>
