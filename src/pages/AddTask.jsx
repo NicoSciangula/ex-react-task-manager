@@ -1,4 +1,5 @@
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, useContext } from "react";
+import { GlobalContext } from "../context/GlobalContext";
 
 const symbols = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/`~";
 
@@ -6,6 +7,8 @@ export default function AddTask() {
   const [inputData, setInputData] = useState("");
   const textAreaRef = useRef();
   const selectRef = useRef();
+
+  const { addTask } = useContext(GlobalContext);
 
   const taskTitleError = useMemo(() => {
     if (!inputData.trim()) return "Il campo del titolo non può essere vuoto";
@@ -17,7 +20,7 @@ export default function AddTask() {
     if (symbolsError) return "Il campo del titolo non può contenere caratteri speciali";
   }, [inputData]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (taskTitleError) return alert("Il campo del titolo non è valido");
 
@@ -26,7 +29,16 @@ export default function AddTask() {
       description: textAreaRef.current.value,
       status: selectRef.current.value,
     };
-    console.log("Task da aggiungere:", newTask);
+
+    try {
+      await addTask(newTask);
+      alert("Task creato");
+      setInputData("");
+      textAreaRef.current.value = "";
+      selectRef.current.value = "";
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
