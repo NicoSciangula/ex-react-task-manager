@@ -1,11 +1,13 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { GlobalContext } from "../context/GlobalContext";
 import { useNavigate, useParams } from "react-router-dom";
+import Modal from "../components/Modal";
 
 export default function TaskDetails() {
   const { tasks, deleteTask } = useContext(GlobalContext);
   const { id } = useParams();
   const navigate = useNavigate();
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const singleTask = tasks.find((task) => {
     return task.id === parseInt(id);
@@ -14,10 +16,9 @@ export default function TaskDetails() {
   const handleDelete = async () => {
     try {
       await deleteTask(parseInt(id));
-      alert("Task eliminata");
       navigate("/");
     } catch (err) {
-      alert(err.message || "Impossibile eliminare la task");
+      console.error(err.message);
     }
   };
 
@@ -41,13 +42,20 @@ export default function TaskDetails() {
             </p>
           </div>
           <div className="d-flex justify-content-between">
-            <button className="btn btn-danger" onClick={handleDelete}>
+            <button className="btn btn-danger" onClick={() => setIsOpenModal(!isOpenModal)}>
               Elimina task
             </button>
             <button onClick={() => navigate("/")} className="btn btn-secondary">
               Indietro
             </button>
           </div>
+          <Modal
+            title="Elimina Task"
+            content="Sei sicuro di voler procedere?"
+            show={isOpenModal}
+            onClose={() => setIsOpenModal(!isOpenModal)}
+            onConfirm={handleDelete}
+          />
         </div>
       </div>
     </>

@@ -53,6 +53,30 @@
   box-shadow: 0 0 6px 2px rgb(0, 78, 130);
   padding: 1.5rem;
 }
-.details-container p{
+.details-container p {
   font-size: 1.2rem;
+}
+
+.modal-container {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.my-modal {
+  width: 400px;
+  padding: 2.5rem;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 0 10px 1px rgb(0, 140, 255);
+}
+
+.btn-container {
+  padding-top: 0.5rem;
 }
