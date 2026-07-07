@@ -1,6 +1,6 @@
 import { createPortal } from "react-dom";
 
-export default function Modal({ title, content, show = false, onClose, onConfirm }) {
+export default function Modal({ title, content, show = false, onClose, onConfirm, confirmText }) {
   if (!show) return null;
 
   return (
@@ -9,10 +9,10 @@ export default function Modal({ title, content, show = false, onClose, onConfirm
       <div className="modal-container">
         <div className="my-modal">
           <h2>{title}</h2>
-          <p>{content}</p>
+          {content}
           <div className="d-flex justify-content-between btn-container">
             <button className="btn btn-success" onClick={onConfirm}>
-              Conferma
+              {confirmText}
             </button>
             <button className="btn btn-danger" onClick={onClose}>
               Annulla
