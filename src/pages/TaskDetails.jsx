@@ -28,6 +28,7 @@ export default function TaskDetails() {
     try {
       await updateTask(update);
       setShowEditModal(false);
+      alert("Task modificata");
       navigate("/");
     } catch (err) {
       console.error(err.message);

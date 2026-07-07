@@ -22,7 +22,7 @@ export default function EditTaskModal({ task, show, onClose, onSave }) {
       title="Modifica task"
       confirmText="Salva"
       content={
-        <div className="form-container">
+        <div className="modal-form">
           <form className="d-flex flex-column" ref={formRef} onSubmit={handleSubmit}>
             <div className="d-flex flex-column">
               <label>Titolo</label>

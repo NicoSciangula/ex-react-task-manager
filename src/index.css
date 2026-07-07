@@ -44,6 +44,11 @@
   border-radius: 8px;
   width: 500px;
 }
+.modal-form {
+  border-radius: 8px;
+  width: 450px;
+  padding: 1.5rem 0;
+}
 .form-container label {
   margin-top: 0.5rem;
 }
